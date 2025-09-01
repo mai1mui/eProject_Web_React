@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>Order form</title>
+  
+</head>
+<body>
+  <div class="order-form">
+    <button class="close-btn" onclick="window.location.href='ShoppingCart.html'">X</button>
+    <h2>Order information</h2>
+    <form id="orderForm">
+      <!-- Thông tin khách hàng -->
+      <div class="order-header">
+        <label>Name:
+          <input type="text" name="customerName" placeholder="Enter name" required>
+        </label>
+        <label>Phone number:
+          <input type="text" name="phone" placeholder="Enter phone number" required>
+        </label>
+        <label>Address:
+          <input type="text" name="address" placeholder="Enter address" required>
+        </label>
+      </div>
+
+      <!-- Danh sách sản phẩm đã chọn -->
+      <div class="order-products">
+        <h3>Selected products</h3>
+        <table class="order-cart">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Ví dụ sản phẩm 1 -->
+            <tr>
+              <td>
+                <div class="product-info">
+                  <!-- Thay đường dẫn ảnh tùy ý -->
+                  <img src="./image/PlasticBottle15.jpg" alt="Product Image">
+                  <div class="basic-info">
+                    <p>Name: 100ml Plastic Bottle</p>
+                    <p>Type: 100ml</p>
+                  </div>
+                </div>
+              </td>
+              <!-- Thêm thuộc tính data-price để lưu giá trị số -->
+              <td class="price" data-price="15000">15.000 VND</td>
+              <td>
+                <div class="quantity-control">
+                    <button class="minus">-</button>
+                    <input type="number" value="0" min="0">
+                    <button class="plus">+</button>
+                  </div>
+                </td>
+              <!-- Ô Amount sẽ được cập nhật tự động -->
+             <td class="amount">0 VND</td>
+              <td>
+                <button class="remove-btn">X</button>
+              </td>
+            </tr>
+
+            <!-- Ví dụ sản phẩm 2 -->
+            <tr>
+              <td>
+                <div class="product-info">
+                  <!-- Thay đường dẫn ảnh tùy ý -->
+                  <img src="./imagePlasticBottle1L/PlasticBottle1L.jpg" alt="Product Image">
+                  <div class="basic-info">
+                    <p>Name: Plastic Bottle</p>
+                    <p>Type: 1l</p>
+                  </div>
+                </div>
+              </td>
+              <!-- Thêm thuộc tính data-price để lưu giá trị số -->
+              <td class="price" data-price="50000">50.000 VND</td>
+              <td>
+                <div class="quantity-control">
+                    <button class="minus">-</button>
+                    <input type="number" value="0" min="0">
+                    <button class="plus">+</button>
+                  </div>
+                </td>
+              <!-- Ô Amount sẽ được cập nhật tự động -->
+             <td class="amount">0 VND</td>
+              <td>
+                <button class="remove-btn">X</button>
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tổng thanh toán và nút Thanh toán -->
+      <div class="order-footer">
+        <div class="total-payment">
+          <span>Total payment: </span>
+          <span class="total-amount">1000 VND</span>
+        </div>
+        
+      </div>
+      <div class="order-btn">
+        <button type="submit" class="purchase-btn">Order</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- JavaScript xử lý cập nhật số lượng và tính toán Amount, Tổng thanh toán -->
+  <script>
+    function formatCurrency(value) {
+        return value.toLocaleString('vi-VN') + " VND";
+    }
+    function updateRowAmount(row) {
+      const priceCell = row.querySelector('.price');
+      const quantityInput = row.querySelector('.quantity-input');
+      const amountCell = row.querySelector('.amount');
+      
+      const price = parseFloat(priceCell.getAttribute('data-price'));
+      const quantity = parseInt(quantityInput.value);
+      const amount = price * quantity;
+      
+      amountCell.textContent = amount + " VND";
+    }
+
+    // Hàm cập nhật tổng thanh toán của đơn hàng
+    function updateTotalPayment() {
+        let total = 0;
+        document.querySelectorAll('.amount').forEach(cell => {
+            total += parseFloat(cell.textContent.replace(/\D/g, '')) || 0;
+        });
+        document.querySelector('.total-amount').textContent = formatCurrency(total);
+    }
+
+    
+    // Lắng nghe thay đổi của các input số lượng
+    document.addEventListener('DOMContentLoaded', function() {
+      let cartData = JSON.parse(localStorage.getItem('cartData')) || [];
+      const tbody = document.querySelector('.order-cart tbody');
+      tbody.innerHTML = ''; // Xóa dữ liệu cũ
+
+      let total = 0;
+      cartData.forEach(product => {
+          let row = document.createElement('tr');
+          row.innerHTML = `
+              <td>
+                <div class="product-info">
+                    <img src="./image/PlasticBottle12.jpg" alt="Product Image">
+                    <div class="basic-info">
+                        <p>${product.name}</p>
+                    </div>
+                </div>
+              </td>
+              <td class="price" data-price="${product.price}">${formatCurrency(product.price)}</td>
+              <td>
+                  <input type="number" value="${product.quantity}" min="0" class="quantity-input">
+              </td>
+              <td class="amount">${formatCurrency(product.amount)}</td>
+          `;
+          tbody.appendChild(row);
+          total += product.price * product.quantity;
+      });
+
+      // Cập nhật số lượng khi người dùng thay đổi input
+      document.querySelectorAll('.quantity-input').forEach(input => {
+          input.addEventListener('input', function() {
+              const row = this.closest('tr');
+              const price = parseFloat(row.querySelector('.price').getAttribute('data-price'));
+              const quantity = parseInt(this.value);
+              row.querySelector('.amount').textContent = formatCurrency(price * quantity);
+
+              // Cập nhật tổng tiền
+              let newTotal = 0;
+              document.querySelectorAll('.amount').forEach(cell => {
+                newTotal += parseFloat(cell.textContent.replace(/\D/g, '')) || 0;
+              });
+              document.querySelector('.total-amount').textContent = formatCurrency(newTotal);
+          });
+      });
+  });
+
+
+    // Cập nhật tổng thanh toán khi trang được tải
+    document.addEventListener('DOMContentLoaded', function() {
+      updateTotalPayment();
+    });
+
+    // Xử lý sự kiện submit form (ví dụ: gửi dữ liệu hoặc hiển thị thông báo)
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Lấy thông tin khách hàng
+      const customerName = this.customerName.value;
+      const phone = this.phone.value;
+      const address = this.address.value;
+      // Tính tổng tiền
+      const totalAmount = document.querySelector('.total-amount').textContent;
+      
+      // Ví dụ hiển thị thông báo (bạn có thể thay bằng gửi dữ liệu lên server)
+      alert("Order successful!\nOur staff will contact you within 24 hours.");
+    });
+  </script>
+</body>
+</html>

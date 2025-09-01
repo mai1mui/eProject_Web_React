@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+    <script>
+        function check(){
+            //1.fullname
+            var sName=document.getElementById("txtName").value;
+            if(sName.length==0){
+                alert("Name field can't left blank!");
+                document.getElementById("txtName").focus();
+                return false;
+            }
+            //2.mail
+            var sMail=document.getElementById("txtMail").value;
+            var reMail=/^[A-Za-z0-9\._%]{2,}[@][A-Za-z]{2,}[.][A-Za-z]{2,}([.][A-Za-z]{2,})?$/;
+            if(reMail.test(sMail)==false){
+                alert("Invalid Email!");
+                document.getElementById("txtMail").focus();
+                return false;
+            }
+            //3.phone
+            var sPhone=document.getElementById("txtPhone").value;
+            var rePhone=/^0[0-9]{9,12}$/;
+            if(rePhone.test(sPhone)==false){
+                alert("Invalid Phone!");
+                document.getElementById("txtPhone").focus();
+                return false;
+            }
+            // Notification
+            alert("Thank you for contacting us!\nWe will reply within 1-2 business days, except Saturday and Sunday.");
+        }
+    </script>
+</head>
+<body>
+    </div>
+    <!-- Add icons and search bar to the top-right -->
+    <div class="myNavRight">
+        <a href="#" class="icon-link"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="icon-link"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="icon-link"><i class="fab fa-youtube"></i></a>
+        <a href="ShoppingCart.html" class="icon-link"><i class="fas fa-shopping-cart"></i></a>
+    </div>
+    <header>
+        <div id="logo">
+            <!-- Make logo a clickable link to the homepage -->
+            <a href="HomePage.html"><img src="./logo/Polysite.jpg" alt="Polysite Logo"></a>
+        </div>
+        <div class="myNav">
+            <a href="HomePage.html">Home Page</a>
+            <a href="">About Us</a>
+            <a href="">Products</a>
+            <a href="">Services</a>
+            <a href="">Library</a>
+            <a href="ContactUs.html">Contact Us</a>
+            <a href="">Product Search</a>
+            <!-- Product search form -->
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search products" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+    </header>
+    <section>
+        <center class="request-form">
+            
+            <form class="contact-form" action="javascript:void(0);" onsubmit="return check();">
+                <table>
+                    
+                    <button class="close-btn" onclick="closeModal()">X</button>
+                    <tr><h1>Sample Request</h1></tr>
+                    <!--name-->
+                    <tr>
+                        <td align="left" style="padding: 15px;">Name*:</td>
+                        <td><input type="text" class="form-group" id="txtName" placeholder="Enter name" autofocus></td>
+                    </tr>
+                    <!--Mail-->
+                    <tr>
+                        <td align="left" style="padding: 15px;">Email*:</td>
+                        <td><input type="email" class="form-group" id="txtMail" placeholder="Enter email"></td>
+                    </tr>
+                    <!--Mail-->
+                    <tr>
+                        <td align="left" style="padding: 15px;">Email Reception*:</td>
+                        <td>
+                            <input type="radio" name="mailRecep" value="yes" checked>Yes
+                            <input type="radio" name="mailRecep" value="no">No
+                            <div style="width: 600px;">You will receive the latest information, such as new PolySite products, priority if you agree on email reception</div>
+                        </td>
+                    </tr>
+                    <!--Phone-->
+                    <tr>
+                        <td align="left" style="padding: 15px;">Contact Number*:</td>
+                        <td><input type="tel" class="form-group" id="txtPhone" placeholder="Enter number"></td>
+                    </tr>
+                    <!--Fax-->
+                    <tr>
+                        <td align="left" style="padding: 15px;">Fax Number:</td>
+                        <td><input type="tel" class="form-group" id="txtFax" placeholder="Enter fax"></td>
+                    </tr>
+                    <!--content-->
+                    <tr>
+                        <td align="left" style="padding: 15px;">Content:</td>
+                        <td><textarea class="textare"  placeholder="Please describe your problem in detail so we can serve you better."></textarea></td>
+                    </tr>
+                    <!--PolySite Company Terms and Policies-->
+                    <tr style=" margin-top: 10px;">
+                        <td></td>
+                        <td>
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree with <a href="Điều Khoản và Chính Sách Dịch Vụ PolySite.pdf" download="Điều Khoản và Chính Sách Dịch Vụ PolySite.pdf">PolySite Company Terms and Policies</a></label>
+                        </td>
+                    </tr>
+                    
+                </table>
+                <!--Button-->
+                <tr>
+                    <div>
+                        <button   type="submit" value="Register" class="btn">Confirm</button>
+                        <button   type="reset" value="Reset" class="btn">Cancel</button>
+                    </div>
+                </tr>
+            </form>
+        </center>
+    </section>
+    <footer>
+        <div class="contact-map-container">
+            <div class="Contact">
+                <p>CÔNG TY PolySite</p>
+                <i class="fa fa-home">abc</i>
+                <i class="fa fa-phone">000</i>
+                <i class="fa fa-envelope">abc</i>
+            </div>
+            <div class="google-map">
+                <h1>Google map</h1>
+            </div>
+        </div>
+        <p>© 2025 Premium Plastic Cups | Contact us via email: Polysite@example.com</p>
+    </footer>
+
+</body>
+</html>
